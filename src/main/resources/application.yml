@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${DATANBASE_URL:jdbc:postgresql://localhost:5432/vk-text-bot-db}
+    username: ${DATANBASE_USERNAME}
+    password: ${DATANBASE_PASSWORD}
+    pool-size: ${DATANBASE_POOL-SIZE:30}
+  http:
+    converters:
+      preferred-json-mapper: gson
+server:
+  port: ${PORT:8080}
