@@ -5,20 +5,20 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private UserSettings settings;
+    @Enumerated
+    private WorkMode workMode;
+    @Enumerated
     private UserRole role;
     private boolean banned;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,12 +38,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public UserSettings getSettings() {
-        return settings;
+    public WorkMode getWorkMode() {
+        return workMode;
     }
 
-    public void setSettings(UserSettings settings) {
-        this.settings = settings;
+    public void setWorkMode(WorkMode workMode) {
+        this.workMode = workMode;
     }
 
     public UserRole getRole() {

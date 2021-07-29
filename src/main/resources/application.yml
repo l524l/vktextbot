@@ -9,3 +9,9 @@ spring:
       preferred-json-mapper: gson
 server:
   port: ${PORT:8080}
+vk:
+  group-actor:
+    group-id: ${GROUP_ID}
+    access-token: ${ACCESS_TOKEN}
+    secret: ${SECRET}
+    confirmation-token: ${CONFIRMATION-TOKEN}
