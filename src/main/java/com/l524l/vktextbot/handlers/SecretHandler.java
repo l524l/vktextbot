@@ -10,6 +10,11 @@ public class SecretHandler extends RequestHandler {
         this.config = config;
     }
 
+    public SecretHandler(GroupActorConfig config, RequestHandler nextHandler) {
+        this.config = config;
+        setNextHandler(nextHandler);
+    }
+
     @Override
     public String handleRequest(JsonObject object) {
         String requestSecret;

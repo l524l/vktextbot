@@ -19,13 +19,12 @@ public class VkCallBackReceiver {
 
     @RequestMapping("/")
     public @ResponseBody String onVkCallBackReceived(@RequestBody JsonObject callBack){
-        BaseRequestHandler baseRequestHandler = new BaseRequestHandler();
-        ConfirmationHandler confirmationHandler = new ConfirmationHandler(actorConfig);
-        SecretHandler secretHandler = new SecretHandler(actorConfig);
-
-        secretHandler.setNextHandler(confirmationHandler);
-        baseRequestHandler.setNextHandler(secretHandler);
-
+        BaseRequestHandler baseRequestHandler = new BaseRequestHandler(
+                new ConfirmationHandler(
+                        actorConfig,
+                        new SecretHandler(actorConfig)
+                )
+        );
         String s = baseRequestHandler.handleRequest(callBack);
         return s;
     }

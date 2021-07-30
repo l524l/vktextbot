@@ -11,6 +11,11 @@ public class ConfirmationHandler extends RequestHandler {
         this.actorConfig = actorConfig;
     }
 
+    public ConfirmationHandler(GroupActorConfig actorConfig, RequestHandler nextHandler) {
+        this.actorConfig = actorConfig;
+        setNextHandler(nextHandler);
+    }
+
     @Override
     public String handleRequest(JsonObject object) {
         String type = object.get("type").getAsString();
