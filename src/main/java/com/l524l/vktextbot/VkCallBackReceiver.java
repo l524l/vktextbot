@@ -2,10 +2,7 @@ package com.l524l.vktextbot;
 
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
-import com.l524l.vktextbot.handlers.BaseRequestHandler;
-import com.l524l.vktextbot.handlers.ConfirmationHandler;
-import com.l524l.vktextbot.handlers.SecretHandler;
-import com.l524l.vktextbot.handlers.UserHandler;
+import com.l524l.vktextbot.handlers.*;
 import com.l524l.vktextbot.vk.GroupActorConfig;
 import com.l524l.vktextbot.vk.VkApiFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +23,19 @@ public class VkCallBackReceiver {
 
     @RequestMapping("/")
     public @ResponseBody String onVkCallBackReceived(@RequestBody JsonObject callBack){
-        BaseRequestHandler baseRequestHandler = new BaseRequestHandler(
-                new ConfirmationHandler(
-                        actorConfig,
-                        new SecretHandler(actorConfig, new UserHandler(userRepository,apiFacade))
-                )
-        );
-        String s = baseRequestHandler.handleRequest(callBack);
-        return s;
+        BaseRequestHandler baseRequestHandler = new BaseRequestHandler();
+        SecretHandler secretHandler = new SecretHandler(actorConfig);
+        ConfirmationHandler confirmationHandler = new ConfirmationHandler(actorConfig);
+        UserHandler userHandler = new UserHandler(userRepository, apiFacade);
+
+
+        RequestHandlersChainBuilder builder = new RequestHandlersChainBuilder();
+        builder.addHandler(baseRequestHandler);
+        builder.addHandler(secretHandler);
+        builder.addHandler(confirmationHandler);
+        builder.addHandler(userHandler);
+
+        RequestHandler handler = builder.buildChain();
+        return handler.handleRequest(callBack);
     }
 }

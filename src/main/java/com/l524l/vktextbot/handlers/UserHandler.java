@@ -23,10 +23,6 @@ public class UserHandler extends RequestHandler implements VkCallBackSubject {
         this.vkApiFacade = vkApiFacade;
     }
 
-    public UserHandler(UserRepository repository, VkApiFacade vkApiFacade, RequestHandler nextHandler) {
-        setNextHandler(nextHandler);
-    }
-
     @Override
     public String handleRequest(JsonObject object) {
         int userId = object.get("object")
