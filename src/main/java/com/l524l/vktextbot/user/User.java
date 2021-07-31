@@ -3,6 +3,7 @@ package com.l524l.vktextbot.user;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "bot_user")
 public class User {
     @Id
     private int id;

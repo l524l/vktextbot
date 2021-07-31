@@ -7,6 +7,9 @@ spring:
   http:
     converters:
       preferred-json-mapper: gson
+  jpa:
+    hibernate:
+      ddl-auto: update
 server:
   port: ${PORT:8080}
 vk:

@@ -1,10 +1,13 @@
 package com.l524l.vktextbot;
 
 import com.google.gson.JsonObject;
+import com.l524l.vktextbot.database.UserRepository;
 import com.l524l.vktextbot.handlers.BaseRequestHandler;
 import com.l524l.vktextbot.handlers.ConfirmationHandler;
 import com.l524l.vktextbot.handlers.SecretHandler;
+import com.l524l.vktextbot.handlers.UserHandler;
 import com.l524l.vktextbot.vk.GroupActorConfig;
+import com.l524l.vktextbot.vk.VkApiFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +19,17 @@ public class VkCallBackReceiver {
 
     @Autowired
     private GroupActorConfig actorConfig;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private VkApiFacade apiFacade;
 
     @RequestMapping("/")
     public @ResponseBody String onVkCallBackReceived(@RequestBody JsonObject callBack){
         BaseRequestHandler baseRequestHandler = new BaseRequestHandler(
                 new ConfirmationHandler(
                         actorConfig,
-                        new SecretHandler(actorConfig)
+                        new SecretHandler(actorConfig, new UserHandler(userRepository,apiFacade))
                 )
         );
         String s = baseRequestHandler.handleRequest(callBack);
