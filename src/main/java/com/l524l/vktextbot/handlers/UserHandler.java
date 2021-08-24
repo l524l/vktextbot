@@ -1,5 +1,6 @@
 package com.l524l.vktextbot.handlers;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
 import com.l524l.vktextbot.user.User;
@@ -7,6 +8,8 @@ import com.l524l.vktextbot.vk.VkApiFacade;
 import com.l524l.vktextbot.vk.VkCallBackObserver;
 import com.l524l.vktextbot.vk.VkCallBackRequest;
 import com.l524l.vktextbot.vk.VkCallBackSubject;
+import com.vk.api.sdk.callback.CallbackApi;
+import com.vk.api.sdk.objects.messages.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +28,18 @@ public class UserHandler extends RequestHandler implements VkCallBackSubject {
 
     @Override
     public String handleRequest(JsonObject object) {
-        int userId = object.get("object")
+        JsonObject message = object.get("object")
                 .getAsJsonObject()
                 .get("message")
-                .getAsJsonObject()
-                .get("from_id")
-                .getAsInt();
+                .getAsJsonObject();
+
+        Gson gson = new Gson();
+        Message message1 = gson.fromJson(message, Message.class);
+
+        int userId = message1.getFromId();
+        int peerId = message1.getPeerId();
+
+
         User requestSender;
         if (repository.existsById(userId)){
             requestSender = repository.getById(userId);

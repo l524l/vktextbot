@@ -1,8 +1,6 @@
 package com.l524l.vktextbot.vk;
 
 import com.l524l.vktextbot.user.User;
-import com.l524l.vktextbot.user.UserRole;
-import com.l524l.vktextbot.user.WorkMode;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -11,6 +9,8 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.users.responses.GetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Random;
 
 @Component
 public class VkApiFacade {
@@ -28,43 +28,44 @@ public class VkApiFacade {
         this.groupActor = groupActor;
         this.httpClient = transportClient;
         apiClient = new VkApiClient(httpClient);
+        apiClient.setVersion("5.131");
     }
 
     public void sendMessage(String text, User user){
+        sendMessage(text, user.getId());
+    }
+
+    public void sendMessage(String text, int peerId){
+        Random random = new Random();
         try {
             apiClient.messages()
                     .send(groupActor)
-                    .chatId(user.getId())
+                    .peerId(peerId)
+                    .randomId(random.nextInt())
                     .message(text)
                     .execute();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
+        } catch (ApiException | ClientException e) {
             e.printStackTrace();
         }
     }
 
+    // FIXME: 21.08.2021 Return null is bad practice
     public User getUserData(int id) {
-        User user = new User();
         try {
             GetResponse response = apiClient.users()
                     .get(groupActor)
                     .userIds(String.valueOf(id))
                     .execute()
                     .get(0);
-            user.setId(id);
-            user.setFirstName(response.getFirstName());
-            user.setLastName(response.getLastName());
-            user.setBanned(false);
-            user.setWorkMode(WorkMode.TEXT_FLIP);
-            user.setRole(UserRole.USER);
+            return User.createNewDefaultUser(
+                        id,
+                        response.getFirstName(),
+                        response.getLastName());
 
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
+        } catch (ApiException | ClientException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     public GroupActor getGroupActor() {

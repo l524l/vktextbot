@@ -15,6 +15,18 @@ public class User {
     private UserRole role;
     private boolean banned;
 
+    public static User createNewDefaultUser(int id, String firstName, String lastName) {
+        User user = new User();
+        user.setId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setBanned(false);
+        user.setWorkMode(WorkMode.TEXT_FLIP);
+        user.setRole(UserRole.USER);
+
+        return user;
+    }
+
     public int getId() {
         return id;
     }
