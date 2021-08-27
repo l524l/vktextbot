@@ -1,16 +1,19 @@
 package com.l524l.vktextbot;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
 import com.l524l.vktextbot.handlers.*;
 import com.l524l.vktextbot.vk.GroupActorConfig;
 import com.l524l.vktextbot.vk.VkApiFacade;
+import com.l524l.vktextbot.vk.VkCallbackParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+// FIXME: 27.08.2021 Перенести всю логику настройки конфигурации в другое место
 @Controller
 public class VkCallBackReceiver {
 
@@ -26,7 +29,7 @@ public class VkCallBackReceiver {
         BaseRequestHandler baseRequestHandler = new BaseRequestHandler();
         SecretHandler secretHandler = new SecretHandler(actorConfig);
         ConfirmationHandler confirmationHandler = new ConfirmationHandler(actorConfig);
-        UserHandler userHandler = new UserHandler(userRepository, apiFacade);
+        UserHandler userHandler = new UserHandler(userRepository, apiFacade, new VkCallbackParser(new Gson()));
 
 
         RequestHandlersChainBuilder builder = new RequestHandlersChainBuilder();
