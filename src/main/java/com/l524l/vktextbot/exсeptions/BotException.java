@@ -1,4 +1,4 @@
-package com.l524l.vktextbot.exteptions;
+package com.l524l.vktextbot.exсeptions;
 
 public class BotException extends Exception {
 

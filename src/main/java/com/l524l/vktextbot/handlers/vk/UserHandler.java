@@ -1,9 +1,11 @@
-package com.l524l.vktextbot.handlers;
+package com.l524l.vktextbot.handlers.vk;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
-import com.l524l.vktextbot.exteptions.VkCallbackParsingException;
+import com.l524l.vktextbot.exсeptions.vk.VkCallbackParsingException;
+import com.l524l.vktextbot.handlers.RequestHandler;
+import com.l524l.vktextbot.senders.vk.VkDataSender;
 import com.l524l.vktextbot.user.User;
 import com.l524l.vktextbot.vk.*;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
@@ -15,17 +17,17 @@ import java.util.List;
 public class UserHandler extends RequestHandler implements VkCallBackSubject {
 
     private final UserRepository repository;
-    private final VkApiFacade vkApiFacade;
+    private final VkDataSender vkDataSender;
     private final List<VkCallBackObserver> observers;
     private final VkCallbackParser parser;
     private final Gson gson;
 
-    public UserHandler(UserRepository repository, VkApiFacade vkApiFacade, VkCallbackParser parser) {
+    public UserHandler(UserRepository repository, VkDataSender vkDataSender, VkCallbackParser parser) {
         observers = new ArrayList<>();
         gson = new Gson();
         this.parser = parser;
         this.repository = repository;
-        this.vkApiFacade = vkApiFacade;
+        this.vkDataSender = vkDataSender;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class UserHandler extends RequestHandler implements VkCallBackSubject {
         if (repository.existsById(userId)){
             requestSender = repository.getById(userId);
         } else {
-            requestSender = vkApiFacade.getUserData(userId);
+            requestSender = vkDataSender.getUserData(userId);
             repository.save(requestSender);
         }
 

@@ -1,6 +1,7 @@
-package com.l524l.vktextbot.handlers;
+package com.l524l.vktextbot.handlers.vk;
 
 import com.google.gson.JsonObject;
+import com.l524l.vktextbot.handlers.RequestHandler;
 import com.l524l.vktextbot.vk.GroupActorConfig;
 
 public class SecretHandler extends RequestHandler {

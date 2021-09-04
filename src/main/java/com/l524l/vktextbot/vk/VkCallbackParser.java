@@ -3,7 +3,7 @@ package com.l524l.vktextbot.vk;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.l524l.vktextbot.exteptions.VkCallbackParsingException;
+import com.l524l.vktextbot.exсeptions.vk.VkCallbackParsingException;
 import com.vk.api.sdk.objects.audio.Audio;
 import com.vk.api.sdk.objects.board.TopicComment;
 import com.vk.api.sdk.objects.callback.*;

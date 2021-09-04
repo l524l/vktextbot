@@ -1,6 +1,8 @@
-package com.l524l.vktextbot.vk;
+package com.l524l.vktextbot.senders.vk;
 
+import com.l524l.vktextbot.senders.DataSender;
 import com.l524l.vktextbot.user.User;
+import com.l524l.vktextbot.user.UserFrom;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -13,18 +15,18 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class VkApiFacade {
+public class VkDataSender implements DataSender {
 
     private GroupActor groupActor;
     private HttpTransportClient httpClient;
     private VkApiClient apiClient;
 
     @Autowired
-    public VkApiFacade(GroupActor groupActor) {
+    public VkDataSender(GroupActor groupActor) {
         this(HttpTransportClient.getInstance(), groupActor);
     }
 
-    public VkApiFacade(HttpTransportClient transportClient, GroupActor groupActor) {
+    public VkDataSender(HttpTransportClient transportClient, GroupActor groupActor) {
         this.groupActor = groupActor;
         this.httpClient = transportClient;
         apiClient = new VkApiClient(httpClient);
@@ -60,7 +62,8 @@ public class VkApiFacade {
             return User.createNewDefaultUser(
                         id,
                         response.getFirstName(),
-                        response.getLastName());
+                        response.getLastName(),
+                        UserFrom.VK);
 
         } catch (ApiException | ClientException e) {
             e.printStackTrace();
