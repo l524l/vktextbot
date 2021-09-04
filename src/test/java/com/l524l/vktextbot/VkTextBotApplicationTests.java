@@ -1,6 +1,6 @@
 package com.l524l.vktextbot;
 
-import com.l524l.vktextbot.commands.CommandParser;
+import com.l524l.vktextbot.commands.vk.VkCommandFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,7 +12,6 @@ class VkTextBotApplicationTests {
 	}
    	@Test
 	void test () {
-		CommandParser parser = new CommandParser();
-		parser.parse(null, null);
+
 	}
 }
