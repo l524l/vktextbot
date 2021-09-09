@@ -1,6 +1,8 @@
 package com.l524l.vktextbot.commands.vk;
 
-public class EmptyVkCommand extends VkCommand {
+import com.l524l.vktextbot.commands.Command;
+
+public class EmptyVkCommand extends Command {
 
     public EmptyVkCommand() {
         super(null, null, null);

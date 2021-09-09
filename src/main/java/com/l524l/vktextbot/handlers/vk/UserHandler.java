@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
 import com.l524l.vktextbot.exсeptions.vk.VkCallbackParsingException;
 import com.l524l.vktextbot.handlers.RequestHandler;
-import com.l524l.vktextbot.senders.vk.VkDataSender;
+import com.l524l.vktextbot.vk.VkDataSender;
 import com.l524l.vktextbot.user.User;
 import com.l524l.vktextbot.vk.*;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;

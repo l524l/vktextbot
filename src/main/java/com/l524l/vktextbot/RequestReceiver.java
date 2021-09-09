@@ -9,7 +9,7 @@ import com.l524l.vktextbot.handlers.vk.ConfirmationHandler;
 import com.l524l.vktextbot.handlers.vk.SecretHandler;
 import com.l524l.vktextbot.handlers.vk.UserHandler;
 import com.l524l.vktextbot.vk.GroupActorConfig;
-import com.l524l.vktextbot.senders.vk.VkDataSender;
+import com.l524l.vktextbot.vk.VkDataSender;
 import com.l524l.vktextbot.vk.VkCallbackParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,8 @@ public class RequestReceiver {
     private VkDataSender apiFacade;
 
     @RequestMapping("/")
-    public @ResponseBody String onVkCallBackReceived(@RequestBody JsonObject callBack){
+    public @ResponseBody
+    String onVkCallBackReceived(@RequestBody JsonObject callBack) {
         BaseRequestHandler baseRequestHandler = new BaseRequestHandler();
         SecretHandler secretHandler = new SecretHandler(actorConfig);
         ConfirmationHandler confirmationHandler = new ConfirmationHandler(actorConfig);

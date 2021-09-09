@@ -1,11 +1,12 @@
 package com.l524l.vktextbot.commands.vk;
 
-import com.l524l.vktextbot.senders.vk.VkDataSender;
+import com.l524l.vktextbot.commands.Command;
+import com.l524l.vktextbot.vk.VkDataSender;
 import com.l524l.vktextbot.user.User;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
 import com.vk.api.sdk.objects.messages.Message;
 
-public class HelloVkCommand extends VkCommand {
+public class HelloVkCommand extends Command {
 
     public HelloVkCommand(User executor, CallbackMessage<?> callbackMessage, VkDataSender dataSender) {
         super(executor, callbackMessage, dataSender);

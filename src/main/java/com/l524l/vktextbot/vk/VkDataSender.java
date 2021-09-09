@@ -1,6 +1,5 @@
-package com.l524l.vktextbot.senders.vk;
+package com.l524l.vktextbot.vk;
 
-import com.l524l.vktextbot.senders.DataSender;
 import com.l524l.vktextbot.user.User;
 import com.l524l.vktextbot.user.UserFrom;
 import com.vk.api.sdk.client.VkApiClient;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class VkDataSender implements DataSender {
+public class VkDataSender {
 
     private GroupActor groupActor;
     private HttpTransportClient httpClient;
