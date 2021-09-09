@@ -1,7 +1,6 @@
 package com.l524l.vktextbot.vk;
 
 import com.l524l.vktextbot.user.User;
-import com.l524l.vktextbot.user.UserFrom;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -61,8 +60,7 @@ public class VkDataSender {
             return User.createNewDefaultUser(
                         id,
                         response.getFirstName(),
-                        response.getLastName(),
-                        UserFrom.VK);
+                        response.getLastName());
 
         } catch (ApiException | ClientException e) {
             e.printStackTrace();
