@@ -1,8 +1,13 @@
 package com.l524l.vktextbot.handlers;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope(scopeName = "prototype")
 public class RequestHandlersChainBuilder {
 
     private List<RequestHandler> handlers;

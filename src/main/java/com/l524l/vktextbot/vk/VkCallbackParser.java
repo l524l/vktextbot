@@ -13,12 +13,14 @@ import com.vk.api.sdk.objects.photos.Photo;
 import com.vk.api.sdk.objects.video.Video;
 import com.vk.api.sdk.objects.wall.WallComment;
 import com.vk.api.sdk.objects.wall.Wallpost;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class VkCallbackParser {
 
     private Gson gson;

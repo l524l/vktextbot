@@ -1,16 +1,12 @@
 package com.l524l.vktextbot;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.l524l.vktextbot.database.UserRepository;
-import com.l524l.vktextbot.handlers.*;
+import com.l524l.vktextbot.handlers.RequestHandler;
+import com.l524l.vktextbot.handlers.RequestHandlersChainBuilder;
 import com.l524l.vktextbot.handlers.vk.BaseRequestHandler;
 import com.l524l.vktextbot.handlers.vk.ConfirmationHandler;
 import com.l524l.vktextbot.handlers.vk.SecretHandler;
 import com.l524l.vktextbot.handlers.vk.UserHandler;
-import com.l524l.vktextbot.vk.GroupActorConfig;
-import com.l524l.vktextbot.vk.VkDataSender;
-import com.l524l.vktextbot.vk.VkCallbackParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,22 +18,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RequestReceiver {
 
     @Autowired
-    private GroupActorConfig actorConfig;
+    private SecretHandler secretHandler;
     @Autowired
-    private UserRepository userRepository;
+    private ConfirmationHandler confirmationHandler;
     @Autowired
-    private VkDataSender apiFacade;
+    private BaseRequestHandler baseRequestHandler;
+    @Autowired
+    private UserHandler userHandler;
+    @Autowired
+    private RequestHandlersChainBuilder builder;
+
 
     @RequestMapping("/")
     public @ResponseBody
     String onVkCallBackReceived(@RequestBody JsonObject callBack) {
-        BaseRequestHandler baseRequestHandler = new BaseRequestHandler();
-        SecretHandler secretHandler = new SecretHandler(actorConfig);
-        ConfirmationHandler confirmationHandler = new ConfirmationHandler(actorConfig);
-        UserHandler userHandler = new UserHandler(userRepository, apiFacade, new VkCallbackParser(new Gson()));
 
-
-        RequestHandlersChainBuilder builder = new RequestHandlersChainBuilder();
         builder.addHandler(baseRequestHandler);
         builder.addHandler(secretHandler);
         builder.addHandler(confirmationHandler);

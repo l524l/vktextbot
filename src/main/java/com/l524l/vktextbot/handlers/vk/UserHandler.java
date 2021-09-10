@@ -10,10 +10,13 @@ import com.l524l.vktextbot.user.User;
 import com.l524l.vktextbot.vk.*;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
 import com.vk.api.sdk.objects.messages.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserHandler extends RequestHandler implements VkCallBackSubject {
 
     private final UserRepository repository;
@@ -22,6 +25,7 @@ public class UserHandler extends RequestHandler implements VkCallBackSubject {
     private final VkCallbackParser parser;
     private final Gson gson;
 
+    @Autowired
     public UserHandler(UserRepository repository, VkDataSender vkDataSender, VkCallbackParser parser) {
         observers = new ArrayList<>();
         gson = new Gson();
