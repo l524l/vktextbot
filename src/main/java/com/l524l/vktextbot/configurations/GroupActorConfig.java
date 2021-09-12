@@ -1,4 +1,4 @@
-package com.l524l.vktextbot.vk;
+package com.l524l.vktextbot.configurations;
 
 import com.vk.api.sdk.client.actors.GroupActor;
 import org.springframework.beans.factory.annotation.Value;

@@ -2,7 +2,7 @@ package com.l524l.vktextbot.handlers.vk;
 
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.handlers.RequestHandler;
-import com.l524l.vktextbot.vk.GroupActorConfig;
+import com.l524l.vktextbot.configurations.GroupActorConfig;
 import org.springframework.stereotype.Component;
 
 @Component
