@@ -16,7 +16,6 @@ public final class VkCommandFactory extends CommandFactory {
 
     @Autowired
     public VkCommandFactory(ApplicationContext applicationContext) {
-        System.out.println(applicationContext.getApplicationName());
         this.applicationContext = applicationContext;
     }
 

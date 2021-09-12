@@ -16,6 +16,5 @@ class VkCommandFactoryTest {
     @Test
     void createCommand() {
         HelloVkCommand helloVkCommand = (HelloVkCommand) vkCommandFactory.createCommand(CommandType.HELLO_COMMAND, null, null);
-        System.out.println(helloVkCommand.toString());
     }
 }
