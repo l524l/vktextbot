@@ -1,12 +1,12 @@
 package com.l524l.vktextbot.commands.vk;
 
 import com.l524l.vktextbot.commands.Command;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope(scopeName = "prototype")
 public class EmptyVkCommand extends Command {
-
-    public EmptyVkCommand() {
-        super(null, null, null);
-    }
 
     @Override
     public void execute() {

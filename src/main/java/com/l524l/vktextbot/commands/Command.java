@@ -1,7 +1,6 @@
 package com.l524l.vktextbot.commands;
 
 import com.l524l.vktextbot.user.User;
-import com.l524l.vktextbot.vk.VkDataSender;
 import com.vk.api.sdk.objects.callback.MessageType;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
 import com.vk.api.sdk.objects.messages.Message;
@@ -12,14 +11,12 @@ import java.util.List;
 
 public abstract class Command {
 
-    protected final User executor;
-    protected final CallbackMessage<?> callbackMessage;
-    protected final VkDataSender dataSender;
+    protected User executor;
+    protected CallbackMessage<?> callbackMessage;
 
-    public Command(User executor, CallbackMessage<?> callbackMessage, VkDataSender dataSender) {
-        this.callbackMessage = callbackMessage;
+    public void setContext(User executor, CallbackMessage<?> callbackMessage) {
         this.executor = executor;
-        this.dataSender = dataSender;
+        this.callbackMessage = callbackMessage;
     }
 
     protected List<String> getParams() {
@@ -38,4 +35,5 @@ public abstract class Command {
     }
 
     public abstract void execute();
+    
 }

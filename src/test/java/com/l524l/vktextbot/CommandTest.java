@@ -15,7 +15,7 @@ public class CommandTest extends Command {
     private static CallbackMessage callbackMessage = gson.fromJson("{\"type\": \"message_new\", \"object\" : { \"text\": \"/test   sa  as    ssas sa   \"}}",typeToken);
 
     public CommandTest() {
-        super(null, callbackMessage, null);
+        setContext(null, callbackMessage);
     }
 
     @Override
