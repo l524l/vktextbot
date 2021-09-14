@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class VkCommandFactory extends CommandFactory {
+public class VkCommandFactory extends CommandFactory {
 
     private final ApplicationContext applicationContext;
 

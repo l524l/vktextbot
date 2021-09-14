@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class VkCommandFactoryTest {
@@ -15,6 +14,7 @@ class VkCommandFactoryTest {
 
     @Test
     void createCommand() {
-        HelloVkCommand helloVkCommand = (HelloVkCommand) vkCommandFactory.createCommand(CommandType.HELLO_COMMAND, null, null);
+        EmptyVkCommand helloVkCommand = (EmptyVkCommand) vkCommandFactory.createCommand(CommandType.EMPTY_COMMAND, null, null);
+        helloVkCommand.execute();
     }
 }
