@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("HELLO_COMMAND")
 @Scope(scopeName = "prototype")
 public class HelloVkCommand extends Command {
 

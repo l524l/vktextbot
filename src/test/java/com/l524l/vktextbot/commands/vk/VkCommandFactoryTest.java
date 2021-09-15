@@ -14,7 +14,7 @@ class VkCommandFactoryTest {
 
     @Test
     void createCommand() {
-        EmptyVkCommand helloVkCommand = (EmptyVkCommand) vkCommandFactory.createCommand(CommandType.EMPTY_COMMAND, null, null);
+        EmptyVkCommand helloVkCommand = (EmptyVkCommand) vkCommandFactory.createCommand(CommandType.EMPTY_COMMAND);
         helloVkCommand.execute();
     }
 }

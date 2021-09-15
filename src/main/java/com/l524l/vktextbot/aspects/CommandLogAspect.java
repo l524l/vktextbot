@@ -24,6 +24,7 @@ public class CommandLogAspect {
     public void run(JoinPoint joinPoint){
         LOG.info(joinPoint.getTarget().getClass().getName() + " was executed");
     }
+
     @AfterThrowing(pointcut = "testasp()", throwing = "ex")
     public void runWithExption(JoinPoint joinPoint, Throwable ex){
         LOG.warn(joinPoint.getTarget().getClass().getName() + " has execution error", ex);

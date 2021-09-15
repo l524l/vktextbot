@@ -14,7 +14,7 @@ public enum CommandType {
         return commandName;
     }
 
-    public CommandType getByCommandName(String commandName) {
+    public static CommandType getByCommandName(String commandName) {
         for (CommandType type:
              CommandType.values()) {
             if (type.getCommandName().equals(commandName)) return type;

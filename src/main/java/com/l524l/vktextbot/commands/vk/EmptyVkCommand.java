@@ -4,7 +4,7 @@ import com.l524l.vktextbot.commands.Command;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("EMPTY_COMMAND")
 @Scope(scopeName = "prototype")
 public class EmptyVkCommand extends Command {
 
