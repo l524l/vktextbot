@@ -3,11 +3,14 @@ package com.l524l.vktextbot.handlers.vk;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.l524l.vktextbot.database.UserRepository;
+import com.l524l.vktextbot.exсeptions.UserLoadingException;
 import com.l524l.vktextbot.exсeptions.vk.VkCallbackParsingException;
 import com.l524l.vktextbot.handlers.RequestHandler;
+import com.l524l.vktextbot.user.loaders.UserLoadProcessor;
 import com.l524l.vktextbot.vk.VkDataSender;
 import com.l524l.vktextbot.user.User;
 import com.l524l.vktextbot.vk.*;
+import com.vk.api.sdk.objects.callback.MessageType;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
 import com.vk.api.sdk.objects.messages.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,52 +20,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserHandler extends RequestHandler implements VkCallBackSubject {
+public class NewMessageHandler extends RequestHandler implements VkCallBackSubject {
 
-    private final UserRepository repository;
-    private final VkDataSender vkDataSender;
+    private final UserLoadProcessor userLoadProcessor;
     private final List<VkCallBackObserver> observers;
     private final VkCallbackParser parser;
-    private final Gson gson;
 
     @Autowired
-    public UserHandler(UserRepository repository, VkDataSender vkDataSender, VkCallbackParser parser) {
+    public NewMessageHandler(UserLoadProcessor userLoadProcessor, VkCallbackParser parser) {
+        this.userLoadProcessor = userLoadProcessor;
         observers = new ArrayList<>();
-        gson = new Gson();
         this.parser = parser;
-        this.repository = repository;
-        this.vkDataSender = vkDataSender;
     }
 
     @Override
     public String handleRequest(JsonObject object) {
         User requestSender;
         CallbackMessage<?> callbackMessage;
-        JsonObject rowMessage = object.get("object")
-                .getAsJsonObject()
-                .get("message")
-                .getAsJsonObject();
-
-        Message message = gson.fromJson(rowMessage, Message.class);
 
         try {
             callbackMessage = parser.parse(object);
-        } catch (VkCallbackParsingException e) {
-            throw new RuntimeException("Invalid json object", e);
+
+            if (callbackMessage.getType() == MessageType.MESSAGE_NEW) {
+
+                Message message = (Message) callbackMessage.getObject();
+
+                int userId = message.getFromId();
+
+                requestSender = userLoadProcessor.loadUser(userId);
+                notifyCallBackObservers(requestSender, callbackMessage);
+
+                return "ok";
+
+            } else return handleByNextHandler(object);
+
+        } catch (UserLoadingException | VkCallbackParsingException e) {
+            return "ok";
         }
-
-        int userId = message.getFromId();
-
-        if (repository.existsById(userId)){
-            requestSender = repository.getById(userId);
-        } else {
-            requestSender = vkDataSender.getUserData(userId);
-            repository.save(requestSender);
-        }
-
-        notifyCallBackObservers(requestSender, callbackMessage);
-
-        return "ok";
     }
 
     @Override

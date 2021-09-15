@@ -5,7 +5,7 @@ import com.l524l.vktextbot.handlers.RequestHandlersChainBuilder;
 import com.l524l.vktextbot.handlers.vk.BaseRequestHandler;
 import com.l524l.vktextbot.handlers.vk.ConfirmationHandler;
 import com.l524l.vktextbot.handlers.vk.SecretHandler;
-import com.l524l.vktextbot.handlers.vk.UserHandler;
+import com.l524l.vktextbot.handlers.vk.NewMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class MainRequestHandlerConfig {
     @Autowired
     private BaseRequestHandler baseRequestHandler;
     @Autowired
-    private UserHandler userHandler;
+    private NewMessageHandler newMessageHandler;
     @Autowired
     private RequestHandlersChainBuilder builder;
 
@@ -30,7 +30,7 @@ public class MainRequestHandlerConfig {
         builder.addHandler(baseRequestHandler);
         builder.addHandler(secretHandler);
         builder.addHandler(confirmationHandler);
-        builder.addHandler(userHandler);
+        builder.addHandler(newMessageHandler);
 
         return builder.buildChain();
     }
