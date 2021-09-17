@@ -1,5 +1,6 @@
 package com.l524l.vktextbot.configurations;
 
+import com.l524l.vktextbot.commands.CommandQualifier;
 import com.l524l.vktextbot.handlers.RequestHandler;
 import com.l524l.vktextbot.handlers.RequestHandlersChainBuilder;
 import com.l524l.vktextbot.handlers.vk.BaseRequestHandler;
@@ -23,10 +24,12 @@ public class MainRequestHandlerConfig {
     private NewMessageHandler newMessageHandler;
     @Autowired
     private RequestHandlersChainBuilder builder;
+    @Autowired
+    private CommandQualifier qualifier;
 
     @Bean(name = "mainHandler")
     public RequestHandler createMainRequestHandler() {
-
+        newMessageHandler.registerObserver(qualifier);
         builder.addHandler(baseRequestHandler);
         builder.addHandler(secretHandler);
         builder.addHandler(confirmationHandler);

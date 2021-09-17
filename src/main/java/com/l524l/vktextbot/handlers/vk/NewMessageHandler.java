@@ -35,7 +35,7 @@ public class NewMessageHandler extends RequestHandler implements NewMessageSubje
     @Override
     public String handleRequest(JsonObject object) {
         User requestSender;
-        CallbackMessage<?> callbackMessage;
+        CallbackMessage callbackMessage;
 
         try {
             callbackMessage = parser.parse(object);
