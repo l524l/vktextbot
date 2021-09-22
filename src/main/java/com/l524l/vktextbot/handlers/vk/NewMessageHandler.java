@@ -1,13 +1,13 @@
 package com.l524l.vktextbot.handlers.vk;
 
 import com.google.gson.JsonObject;
-import com.l524l.vktextbot.exсeptions.UserLoadingException;
+import com.l524l.vktextbot.database.UserRepository;
+import com.l524l.vktextbot.exсeptions.UserProfileNotFoundException;
 import com.l524l.vktextbot.exсeptions.vk.VkCallbackParsingException;
 import com.l524l.vktextbot.handlers.RequestHandler;
 import com.l524l.vktextbot.observers.NewMessageObserver;
 import com.l524l.vktextbot.observers.NewMessageSubject;
 import com.l524l.vktextbot.user.User;
-import com.l524l.vktextbot.user.loaders.UserLoadProcessor;
 import com.l524l.vktextbot.vk.VkCallbackParser;
 import com.vk.api.sdk.objects.callback.MessageType;
 import com.vk.api.sdk.objects.callback.messages.CallbackMessage;
@@ -21,13 +21,13 @@ import java.util.List;
 @Component
 public class NewMessageHandler extends RequestHandler implements NewMessageSubject {
 
-    private final UserLoadProcessor userLoadProcessor;
+    private final UserRepository userRepository;
     private final List<NewMessageObserver> observers;
     private final VkCallbackParser parser;
 
     @Autowired
-    public NewMessageHandler(UserLoadProcessor userLoadProcessor, VkCallbackParser parser) {
-        this.userLoadProcessor = userLoadProcessor;
+    public NewMessageHandler(UserRepository userRepository, VkCallbackParser parser) {
+        this.userRepository = userRepository;
         observers = new ArrayList<>();
         this.parser = parser;
     }
@@ -35,7 +35,7 @@ public class NewMessageHandler extends RequestHandler implements NewMessageSubje
     @Override
     public String handleRequest(JsonObject object) {
         User requestSender;
-        CallbackMessage callbackMessage;
+        CallbackMessage<?> callbackMessage;
 
         try {
             callbackMessage = parser.parse(object);
@@ -46,14 +46,15 @@ public class NewMessageHandler extends RequestHandler implements NewMessageSubje
 
                 int userId = message.getFromId();
 
-                requestSender = userLoadProcessor.loadUser(userId);
+                requestSender = userRepository.findById(userId).orElseThrow(UserProfileNotFoundException::new);
+
                 notifyObservers(requestSender, message);
 
                 return "ok";
 
             } else return handleByNextHandler(object);
 
-        } catch (UserLoadingException | VkCallbackParsingException e) {
+        } catch (VkCallbackParsingException | UserProfileNotFoundException e) {
             return "ok";
         }
     }
