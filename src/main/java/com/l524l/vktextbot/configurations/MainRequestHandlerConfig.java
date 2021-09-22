@@ -3,10 +3,9 @@ package com.l524l.vktextbot.configurations;
 import com.l524l.vktextbot.commands.CommandQualifier;
 import com.l524l.vktextbot.handlers.RequestHandler;
 import com.l524l.vktextbot.handlers.RequestHandlersChainBuilder;
-import com.l524l.vktextbot.handlers.vk.BaseRequestHandler;
 import com.l524l.vktextbot.handlers.vk.ConfirmationHandler;
-import com.l524l.vktextbot.handlers.vk.SecretHandler;
 import com.l524l.vktextbot.handlers.vk.NewMessageHandler;
+import com.l524l.vktextbot.handlers.vk.SecretHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +18,6 @@ public class MainRequestHandlerConfig {
     @Autowired
     private ConfirmationHandler confirmationHandler;
     @Autowired
-    private BaseRequestHandler baseRequestHandler;
-    @Autowired
     private NewMessageHandler newMessageHandler;
     @Autowired
     private RequestHandlersChainBuilder builder;
@@ -30,7 +27,6 @@ public class MainRequestHandlerConfig {
     @Bean(name = "mainHandler")
     public RequestHandler createMainRequestHandler() {
         newMessageHandler.registerObserver(qualifier);
-        builder.addHandler(baseRequestHandler);
         builder.addHandler(secretHandler);
         builder.addHandler(confirmationHandler);
         builder.addHandler(newMessageHandler);
