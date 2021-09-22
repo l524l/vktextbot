@@ -24,7 +24,11 @@ public class CommandQualifier implements NewMessageObserver {
 
     @Override
     public void onNewMessage(User user, Message message) {
-        CommandType type = parseCommandType(message.getText());
+        String messageText = message.getText();
+
+        if (messageText.equals("")) return;
+
+        CommandType type = parseCommandType(messageText);
 
         Command command = commandFactory.createCommand(type);
         command.setContext(user, message);
