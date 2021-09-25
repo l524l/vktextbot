@@ -1,13 +1,11 @@
 package com.l524l.vktextbot.commands.vk;
 
+import com.l524l.vktextbot.annotations.BotCommand;
 import com.l524l.vktextbot.commands.Command;
 import com.l524l.vktextbot.vk.VkDataSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Component("EMPTY_COMMAND")
-@Scope(scopeName = "prototype")
+@BotCommand("EMPTY_COMMAND")
 public class EmptyVkCommand extends Command {
 
     private final VkDataSender dataSender;
