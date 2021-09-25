@@ -1,5 +1,7 @@
 package com.l524l.vktextbot.user;
 
 public enum UserRole {
-    USER, ADMIN
+    OWNER,
+    ADMIN,
+    USER;
 }

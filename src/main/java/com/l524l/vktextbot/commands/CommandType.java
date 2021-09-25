@@ -2,7 +2,8 @@ package com.l524l.vktextbot.commands;
 
 public enum CommandType {
     EMPTY_COMMAND("empty"),
-    HELLO_COMMAND("hello");
+    HELLO_COMMAND("hello"),
+    SECRET_HELLO_COMMAND("shello");
 
     private String commandName;
 

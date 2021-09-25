@@ -12,10 +12,20 @@ public abstract class Command {
     protected User executor;
     protected Message message;
 
+    public abstract void execute();
+
     public void setContext(User executor, Message message) {
         this.executor = executor;
         this.message = message;
 
+    }
+
+    public User getExecutor() {
+        return executor;
+    }
+
+    public Message getMessage() {
+        return message;
     }
 
     protected List<String> getParams() {
@@ -29,6 +39,6 @@ public abstract class Command {
         }
     }
 
-    public abstract void execute();
+
     
 }

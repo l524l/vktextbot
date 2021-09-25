@@ -1,9 +1,8 @@
 package com.l524l.vktextbot.user;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "bot_user")
@@ -17,8 +16,13 @@ public class User {
     @Enumerated
     private WorkMode workMode;
     @Enumerated
-    private UserRole role;
+    @ElementCollection
+    private List<UserRole> roles;
     private boolean banned;
+
+    public User() {
+        this.roles = new ArrayList<>();
+    }
 
     public static User createNewDefaultUser(int id, String firstName, String lastName) {
         User user = new User();
@@ -27,7 +31,7 @@ public class User {
         user.setLastName(lastName);
         user.setBanned(false);
         user.setWorkMode(WorkMode.TEXT_FLIP);
-        user.setRole(UserRole.USER);
+        user.addRole(UserRole.USER);
 
         return user;
     }
@@ -64,12 +68,22 @@ public class User {
         this.workMode = workMode;
     }
 
-    public UserRole getRole() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(UserRole role) {
+        if (!roles.contains(role)){
+            roles.add(role);
+        }
+    }
+
+    public boolean hasRole(UserRole role) {
+        return roles.contains(role);
     }
 
     public boolean isBanned() {

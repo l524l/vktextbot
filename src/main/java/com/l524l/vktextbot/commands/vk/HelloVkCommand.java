@@ -19,6 +19,6 @@ public class HelloVkCommand extends Command {
 
     @Override
     public void execute() {
-        dataSender.sendMessage(String.format("Hello, %s!", executor.getFirstName()), executor);
+        dataSender.sendMessage(String.format("Привет, %s!", executor.getFirstName()), executor);
     }
 }
